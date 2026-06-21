@@ -7,7 +7,7 @@ public class Turma {
     private Disciplina disciplina;
     private ArrayList<Aluno> turma;
 
-    Turma(String codigo, Disciplina disciplina) {
+    public Turma(String codigo, Disciplina disciplina) {
         this.codigo = codigo;
         this.disciplina = disciplina;
         this.turma = new ArrayList<>();

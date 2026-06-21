@@ -1,5 +1,6 @@
 package Repository;
 
+import Model.Aluno;
 import Model.Turma;
 import java.util.ArrayList;
 import java.io.BufferedWriter;
@@ -83,6 +84,7 @@ public class TurmaRepository {
     }
 
     public void carregarArquivo(String caminho) {
+        turmas.clear();
 
         try {
 
@@ -94,8 +96,29 @@ public class TurmaRepository {
 
             while ((linha = br.readLine()) != null) {
 
-                System.out.println(linha);
+                String[] dados = linha.split(";");
+                ArrayList<Aluno> turma = new ArrayList<>();
+                String alunos = "";
+                for(int i = 4;i < dados.length;i++){
+                    alunos += dados[i];
+                    if(i < dados.length - 1) {
+                        alunos += ";";
+                    }
+                }
 
+                alunos = alunos.replace("[", "").replace("]", "").trim();
+
+                if(!alunos.isEmpty()) {
+                    String[] listaAlunos = alunos.split(";");
+                    for(int i = 0;i + 3 < listaAlunos.length;i += 4){
+                        Aluno aluno = new Aluno(listaAlunos[i + 1], listaAlunos[i], listaAlunos[i + 2], Integer.parseInt(listaAlunos[i + 3]));
+                        turma.add(aluno);
+                    }
+                }
+
+                Turma turmaCarregada = new Turma(dados[0], new Model.Disciplina(dados[1], dados[2], Integer.parseInt(dados[3])));
+                turmaCarregada.setTurma(turma);
+                turmas.add(turmaCarregada);
             }
 
             br.close();

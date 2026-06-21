@@ -67,7 +67,7 @@ public class Nota {
     public String getSituacao() {
         double media = calcularMedia();
 
-        if (media >= 5.0) {
+        if (media >= 6.0) {
             return "Aprovado";
         } else {
             return "Reprovado";

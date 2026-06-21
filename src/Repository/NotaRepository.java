@@ -1,0 +1,114 @@
+package Repository;
+
+import Model.Nota;
+import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class NotaRepository {
+    private ArrayList<Nota> notas;
+
+    public NotaRepository() {
+        this.notas = new ArrayList<>();
+    }
+
+    public boolean adicionar(Nota nota) {
+        if(buscar(nota.getMatriculaAluno(),nota.getCodigoDisciplina()) != null) {
+            return false;
+        }
+        notas.add(nota);
+        return true;
+    }
+
+    public ArrayList<Nota> listar() {
+        return notas;
+    }
+
+    public Nota buscar(String matriculaAluno,String codigoDisciplina) {
+        for(int i=0;i<notas.size();i++) {
+            Nota nota = notas.get(i);
+            if(nota.getMatriculaAluno().equals(matriculaAluno) && nota.getCodigoDisciplina().equals(codigoDisciplina)) {
+                return nota;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Nota> buscarPorAluno(String matriculaAluno) {
+        ArrayList<Nota> encontradas = new ArrayList<>();
+        for(int i=0;i<notas.size();i++) {
+            Nota nota = notas.get(i);
+            if(nota.getMatriculaAluno().equals(matriculaAluno)) {
+                encontradas.add(nota);
+            }
+        }
+        return encontradas;
+    }
+
+    public ArrayList<Nota> buscarPorDisciplina(String codigoDisciplina) {
+        ArrayList<Nota> encontradas = new ArrayList<>();
+        for(int i=0;i<notas.size();i++) {
+            Nota nota = notas.get(i);
+            if(nota.getCodigoDisciplina().equals(codigoDisciplina)) {
+                encontradas.add(nota);
+            }
+        }
+        return encontradas;
+    }
+
+    public boolean remover(String matriculaAluno,String codigoDisciplina) {
+        Nota nota = buscar(matriculaAluno,codigoDisciplina);
+        if(nota != null) {
+            notas.remove(nota);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean atualizar(Nota notaAtualizada) {
+        Nota nota = buscar(notaAtualizada.getMatriculaAluno(),notaAtualizada.getCodigoDisciplina());
+        if(nota != null) {
+            nota.setNotas(notaAtualizada.getNotas());
+            return true;
+        }
+        return false;
+    }
+
+    public void salvarArquivo(String caminho) {
+        try {
+            BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+            for(int i=0;i<notas.size();i++) {
+                bw.write(notas.get(i).toString());
+                bw.newLine();
+            }
+            bw.close();
+        }
+        catch(IOException e) {
+            System.out.println("Erro ao salvar arquivo");
+        }
+    }
+
+    public void carregarArquivo(String caminho) {
+        notas.clear();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(caminho));
+            String linha;
+            while((linha = br.readLine()) != null) {
+                String[] dados = linha.split(";");
+                ArrayList<Double> listaNotas = new ArrayList<>();
+                for(int i=2;i<dados.length;i++) {
+                    listaNotas.add(Double.parseDouble(dados[i]));
+                }
+                Nota nota = new Nota(dados[0],dados[1],listaNotas);
+                notas.add(nota);
+            }
+            br.close();
+        }
+        catch(IOException e) {
+            System.out.println("Erro ao carregar arquivo");
+        }
+    }
+}

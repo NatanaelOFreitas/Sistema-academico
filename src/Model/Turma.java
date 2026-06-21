@@ -96,6 +96,6 @@ public class Turma {
 
     @Override
     public String toString() {
-        return codigo + ";" + disciplina.getNome() + ";" + turma.size() + " aluno(s)";
+        return codigo + ";" + disciplina.getNome() + ";" + getTurma();
     }
 }

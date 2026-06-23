@@ -143,12 +143,4 @@ public class NotaController {
 
         return nota.getSituacao();
     }
-
-    public void salvarDados(String caminho) {
-        repository.salvarArquivo(caminho);
-    }
-
-    public void carregarDados(String caminho) {
-        repository.carregarArquivo(caminho);
-    }
 }

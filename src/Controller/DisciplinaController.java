@@ -94,12 +94,4 @@ public class DisciplinaController {
 
         return repository.atualizar(disciplina);
     }
-
-    public void salvarDados(String caminho) {
-        repository.salvarArquivo(caminho);
-    }
-
-    public void carregarDados(String caminho) {
-        repository.carregarArquivo(caminho);
-    }
 }

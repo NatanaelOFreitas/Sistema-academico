@@ -96,12 +96,4 @@ import java.util.ArrayList;
 
             return repository.atualizar(aluno);
         }
-
-        public void salvarDados(String caminho) {
-            repository.salvarArquivo(caminho);
-        }
-
-        public void carregarDados(String caminho) {
-            repository.carregarArquivo(caminho);
-        }
 }

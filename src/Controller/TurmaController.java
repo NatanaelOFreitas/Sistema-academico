@@ -134,12 +134,4 @@ public class TurmaController {
 
         return turma.buscarAlunosPorParteDoNome(nome);
     }
-
-    public void salvarDados(String caminho) {
-        repository.salvarArquivo(caminho);
-    }
-
-    public void carregarDados(String caminho) {
-        repository.carregarArquivo(caminho);
-    }
 }

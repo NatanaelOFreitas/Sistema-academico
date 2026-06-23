@@ -35,6 +35,7 @@ public class TelaTurma extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         turmaController = new TurmaController(new TurmaRepository());
+        turmaController.carregarArquivo();
 
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBackground(new Color(230,240,255));

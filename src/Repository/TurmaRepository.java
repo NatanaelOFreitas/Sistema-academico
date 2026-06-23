@@ -22,12 +22,12 @@ public class TurmaRepository {
             return false;
         }
         turmas.add(turma);
-        salvarArquivo(caminhoTurma);
+        salvarArquivo();
         return true;
     }
 
     public ArrayList<Turma> listar() {
-        carregarArquivo(caminhoTurma);
+        carregarArquivo();
         return turmas;
     }
 
@@ -45,7 +45,7 @@ public class TurmaRepository {
         Turma turma = buscarPorCodigo(codigo);
         if(turma!=null) {
             turmas.remove(turma);
-            salvarArquivo(caminhoTurma);
+            salvarArquivo();
             return true;
         }
         return false;
@@ -57,20 +57,20 @@ public class TurmaRepository {
         if(turma != null) {
             turma.setDisciplina(turmaAtualizada.getDisciplina());
             turma.setTurma(turmaAtualizada.getTurma());
-            salvarArquivo(caminhoTurma);
+            salvarArquivo();
             return true;
         }
 
         return false;
     }
 
-    public void salvarArquivo(String caminho) {
+    public void salvarArquivo() {
 
         try {
 
             BufferedWriter bw =
                 new BufferedWriter(
-                    new FileWriter(caminho));
+                    new FileWriter(caminhoTurma));
 
             for (int i = 0; i < turmas.size(); i++) {
 
@@ -88,14 +88,14 @@ public class TurmaRepository {
         }
     }
 
-    public void carregarArquivo(String caminho) {
+    public void carregarArquivo() {
         turmas.clear();
 
         try {
 
             BufferedReader br =
                 new BufferedReader(
-                    new FileReader(caminho));
+                    new FileReader(caminhoTurma));
 
             String linha;
 

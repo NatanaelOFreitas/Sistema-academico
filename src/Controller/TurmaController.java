@@ -134,4 +134,8 @@ public class TurmaController {
 
         return turma.buscarAlunosPorParteDoNome(nome);
     }
+
+    public void carregarArquivo(){
+        repository.carregarArquivo();
+    }
 }

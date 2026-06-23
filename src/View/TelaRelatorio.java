@@ -39,18 +39,22 @@ public class TelaRelatorio extends JFrame {
         alunoController =
             new AlunoController(
                 new AlunoRepository());
+        alunoController.carregarArquivo();
 
         disciplinaController =
         new DisciplinaController(
                 new DisciplinaRepository());
+        disciplinaController.carregarArquivo();
 
         turmaController =
             new TurmaController(
                 new TurmaRepository());
+        turmaController.carregarArquivo();
 
         notaController =
             new NotaController(
                 new NotaRepository());
+        notaController.carregarArquivo();
 
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBackground(new Color(230,240,255));

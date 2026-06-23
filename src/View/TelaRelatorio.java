@@ -3,6 +3,16 @@ package View;
 import javax.swing.*;
 import java.awt.*;
 
+import Controller.AlunoController;
+import Controller.DisciplinaController;
+import Controller.NotaController;
+import Controller.TurmaController;
+
+import Repository.AlunoRepository;
+import Repository.DisciplinaRepository;
+import Repository.NotaRepository;
+import Repository.TurmaRepository;
+
 public class TelaRelatorio extends JFrame {
 
     private JButton btnRelatorioAlunos;
@@ -14,12 +24,33 @@ public class TelaRelatorio extends JFrame {
 
     private JTextArea txtRelatorio;
 
+    private AlunoController alunoController;
+    private DisciplinaController disciplinaController;
+    private TurmaController turmaController;
+    private NotaController notaController;
+
     public TelaRelatorio() {
 
         setTitle("Relatórios");
         setSize(700, 550);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        
+        alunoController =
+            new AlunoController(
+                new AlunoRepository());
+
+        disciplinaController =
+        new DisciplinaController(
+                new DisciplinaRepository());
+
+        turmaController =
+            new TurmaController(
+                new TurmaRepository());
+
+        notaController =
+            new NotaController(
+                new NotaRepository());
 
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBackground(new Color(230,240,255));
@@ -61,28 +92,67 @@ public class TelaRelatorio extends JFrame {
 
         add(painel);
 
-
         btnRelatorioAlunos.addActionListener(e -> {
 
             txtRelatorio.setText("");
             txtRelatorio.append("RELATÓRIO DE ALUNOS\n\n");
-            txtRelatorio.append("Implementar usando AlunoController.\n");
+
+            for(var aluno : alunoController.listarAlunos()) {
+
+                txtRelatorio.append(
+                    aluno.getMatricula()
+                    + " - "
+                    +aluno.getNome()
+                    + " - "
+                    + aluno.getCurso()
+                    + " - "
+                    + aluno.getPeriodo()
+                    + "\n"
+                );
+
+            }
 
         });
 
+        
         btnRelatorioDisciplinas.addActionListener(e -> {
 
             txtRelatorio.setText("");
             txtRelatorio.append("RELATÓRIO DE DISCIPLINAS\n\n");
-            txtRelatorio.append("Implementar usando DisciplinaController.\n");
+
+            for(var disciplina :
+                disciplinaController.listarDisciplinas()) {
+
+                txtRelatorio.append(
+                    disciplina.getCodigo()
+                    + " - "
+                    + disciplina.getNome()
+                    + " - "
+                    + disciplina.getCargaHoraria()
+                    + "h\n");
+
+            }
 
         });
+
 
         btnRelatorioTurmas.addActionListener(e -> {
 
             txtRelatorio.setText("");
             txtRelatorio.append("RELATÓRIO DE TURMAS\n\n");
-            txtRelatorio.append("Implementar usando TurmaController.\n");
+
+            for(var turma :
+                turmaController.listarTurmas()) {
+
+                txtRelatorio.append(
+                    turma.getCodigo()
+                    + " - "
+                    + turma.getDisciplina().getCodigo()
+                    + " - "
+                    + turma.getTurma().size()
+                    + " aluno(s)\n");
+
+            }
 
         });
 
@@ -90,7 +160,21 @@ public class TelaRelatorio extends JFrame {
 
             txtRelatorio.setText("");
             txtRelatorio.append("RELATÓRIO DE NOTAS\n\n");
-            txtRelatorio.append("Implementar usando NotaController.\n");
+
+            for(var nota :
+                notaController.listarNotas()) {
+
+                txtRelatorio.append(
+                    nota.getMatriculaAluno()
+                    + " - "
+                    + nota.getCodigoDisciplina()
+                    + " - Média: "
+                    + nota.calcularMedia()
+                    + " - "
+                    + nota.getSituacao()
+                    + "\n");
+
+            }
 
         });
 

@@ -31,6 +31,7 @@ public class TelaDisciplina extends JFrame {
 
         DisciplinaRepository repository = new DisciplinaRepository();
         disciplinaController = new DisciplinaController(repository);
+        disciplinaController.carregarArquivo();
 
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBackground(new Color(230,240,255));

@@ -94,4 +94,8 @@ public class DisciplinaController {
 
         return repository.atualizar(disciplina);
     }
+
+    public void carregarArquivo(){
+        repository.carregarArquivo();
+    }
 }

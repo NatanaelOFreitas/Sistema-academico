@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Aluno {
+public class Aluno { 
     private String nome;
     private String matricula;
     private String curso;

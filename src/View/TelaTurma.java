@@ -14,6 +14,7 @@ public class TelaTurma extends JFrame {
 
     private JTextField txtCodigo;
     private JTextField txtCodigoDisciplina;
+    private JTextField txtQuantidade;
 
     private JButton btnCadastrar;
     private JButton btnBuscar;
@@ -46,7 +47,7 @@ public class TelaTurma extends JFrame {
         painel.add(titulo, BorderLayout.NORTH);
 
 
-        JPanel formulario = new JPanel(new GridLayout(2,2,15,15));
+        JPanel formulario = new JPanel(new GridLayout(3,2,15,15));
         formulario.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
         formulario.setBackground(new Color(230,240,255));
 
@@ -59,6 +60,10 @@ public class TelaTurma extends JFrame {
         formulario.add(txtCodigoDisciplina);
 
         painel.add(formulario, BorderLayout.CENTER);
+
+        formulario.add(new JLabel("Quantidade de Alunos:"));
+        txtQuantidade = new JTextField();
+        formulario.add(txtQuantidade);
 
 
         JPanel botoes = new JPanel(new GridLayout(2,3,10,10));
@@ -109,7 +114,8 @@ public class TelaTurma extends JFrame {
 
             boolean sucesso = turmaController.cadastrarTurma(
                     txtCodigo.getText(),
-                    disciplina
+                    disciplina,
+                    Integer.parseInt(txtQuantidade.getText())
             );
 
             if(sucesso){
@@ -149,6 +155,12 @@ public class TelaTurma extends JFrame {
                     turma.getDisciplina().getCodigo()
             );
 
+            txtQuantidade.setText(
+                String.valueOf(
+                    turma.getQuantidadeAlunos()
+          )
+);
+
         });
 
         btnAtualizar.addActionListener(e->{
@@ -162,7 +174,7 @@ public class TelaTurma extends JFrame {
             boolean sucesso = turmaController.atualizarTurma(
                     txtCodigo.getText(),
                     disciplina,
-                    new ArrayList<>()
+                    Integer.parseInt(txtQuantidade.getText())
             );
 
             if(sucesso){
@@ -224,7 +236,7 @@ public class TelaTurma extends JFrame {
             modeloTabela.addRow(new Object[]{
                     turma.getCodigo(),
                     turma.getDisciplina().getCodigo(),
-                    turma.getTurma().size()
+                    turma.getQuantidadeAlunos()
             });
 
         }

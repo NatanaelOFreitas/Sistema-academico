@@ -153,7 +153,7 @@ public class TelaRelatorio extends JFrame {
                     + " - "
                     + turma.getDisciplina().getCodigo()
                     + " - "
-                    + turma.getTurma().size()
+                    + turma.getQuantidadeAlunos()
                     + " aluno(s)\n");
 
             }

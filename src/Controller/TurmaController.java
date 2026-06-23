@@ -16,7 +16,8 @@ public class TurmaController {
 
     public boolean cadastrarTurma(
             String codigo,
-            Disciplina disciplina) {
+            Disciplina disciplina,
+            int quantidadeAlunos) {
 
         if (codigo == null || codigo.trim().isEmpty()) {
             return false;
@@ -29,6 +30,10 @@ public class TurmaController {
         Turma turma = new Turma(
                 codigo,
                 disciplina
+        );
+
+        turma.setQuantidadeAlunos(
+            quantidadeAlunos
         );
 
         return repository.adicionar(turma);
@@ -59,7 +64,7 @@ public class TurmaController {
     public boolean atualizarTurma(
             String codigo,
             Disciplina disciplina,
-            ArrayList<Aluno> alunos) {
+            int quantidadeAlunos) {
 
         if (codigo == null || codigo.trim().isEmpty()) {
             return false;
@@ -74,7 +79,9 @@ public class TurmaController {
                 disciplina
         );
 
-        turma.setTurma(alunos);
+        turma.setQuantidadeAlunos(
+            quantidadeAlunos
+        );
 
         return repository.atualizar(turma);
     }

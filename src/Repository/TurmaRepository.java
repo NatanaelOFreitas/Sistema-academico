@@ -57,6 +57,7 @@ public class TurmaRepository {
         if(turma != null) {
             turma.setDisciplina(turmaAtualizada.getDisciplina());
             turma.setTurma(turmaAtualizada.getTurma());
+            turma.setQuantidadeAlunos(turmaAtualizada.getQuantidadeAlunos());
             salvarArquivo();
             return true;
         }
@@ -104,7 +105,7 @@ public class TurmaRepository {
                 String[] dados = linha.split(";");
                 ArrayList<Aluno> turma = new ArrayList<>();
                 String alunos = "";
-                for(int i = 4;i < dados.length;i++){
+                for(int i = 5; i < dados.length;i++){
                     alunos += dados[i];
                     if(i < dados.length - 1) {
                         alunos += ";";
@@ -122,6 +123,7 @@ public class TurmaRepository {
                 }
 
                 Turma turmaCarregada = new Turma(dados[0], new Model.Disciplina(dados[1], dados[2], Integer.parseInt(dados[3])));
+                turmaCarregada.setQuantidadeAlunos(Integer.parseInt(dados[4]));
                 turmaCarregada.setTurma(turma);
                 turmas.add(turmaCarregada);
             }

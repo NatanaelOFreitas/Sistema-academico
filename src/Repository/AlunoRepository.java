@@ -26,6 +26,7 @@ public class AlunoRepository {
     }
 
     public ArrayList<Aluno> listar() {
+        carregarArquivo(caminhoAluno);
         return alunos;
     }
 

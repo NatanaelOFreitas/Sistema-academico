@@ -26,6 +26,7 @@ public class NotaRepository {
     }
 
     public ArrayList<Nota> listar() {
+        carregarArquivo(caminhoNota);
         return notas;
     }
 

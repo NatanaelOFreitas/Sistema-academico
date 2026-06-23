@@ -27,6 +27,7 @@ public class TurmaRepository {
     }
 
     public ArrayList<Turma> listar() {
+        carregarArquivo(caminhoTurma);
         return turmas;
     }
 

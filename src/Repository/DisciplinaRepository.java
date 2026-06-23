@@ -26,6 +26,7 @@ public class DisciplinaRepository {
     }
 
     public ArrayList<Disciplina> listar() {
+        carregarArquivo(caminhoDisciplina);
         return disciplinas;
     }
 

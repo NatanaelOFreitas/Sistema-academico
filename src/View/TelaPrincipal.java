@@ -7,7 +7,7 @@ public class TelaPrincipal extends JFrame {
 
     public TelaPrincipal() {
         setTitle("Sistema Acadêmico");
-        setSize(600, 500);
+        setSize(700, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -20,10 +20,11 @@ public class TelaPrincipal extends JFrame {
         painel.add(titulo, BorderLayout.NORTH);
 
         JPanel menu = new JPanel();
-        menu.setLayout(new GridLayout(5, 1, 10, 10));
+        menu.setLayout(new GridLayout(6, 1, 10, 10));
         menu.setBackground(new Color(230, 240, 255));
 
         JButton btnAlunos = new JButton("Gerenciar Alunos");
+        JButton btnTurmas = new JButton("Gerenciar Turmas");
         JButton btnDisciplinas = new JButton("Gerenciar Disciplinas");
         JButton btnNotas = new JButton("Lançar Notas");
         JButton btnRelatorios = new JButton("Relatórios");
@@ -32,12 +33,14 @@ public class TelaPrincipal extends JFrame {
         menu.add(btnAlunos);
         menu.add(btnDisciplinas);
         menu.add(btnNotas);
+        menu.add(btnTurmas);
         menu.add(btnRelatorios);
         menu.add(btnSair);
 
         btnAlunos.setFocusPainted(false);
         btnDisciplinas.setFocusPainted(false);
         btnNotas.setFocusPainted(false);
+        btnTurmas.setFocusPainted(false);
         btnRelatorios.setFocusPainted(false);
         btnSair.setFocusPainted(false);
 
@@ -48,13 +51,11 @@ public class TelaPrincipal extends JFrame {
 
         btnDisciplinas.addActionListener(e -> abrirTela (new TelaDisciplina()));
 
-        btnNotas.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Abrir Tela de Notas")
-        );
+        btnNotas.addActionListener(e -> abrirTela (new TelaNota()));
 
-        btnRelatorios.addActionListener(e ->
-                JOptionPane.showMessageDialog(this, "Abrir Tela de Relatórios")
-        );
+        btnTurmas.addActionListener(e -> abrirTela (new TelaTurma()));
+
+        btnRelatorios.addActionListener(e -> abrirTela (new TelaRelatorio()));
 
         btnSair.addActionListener(e -> System.exit(0));
 

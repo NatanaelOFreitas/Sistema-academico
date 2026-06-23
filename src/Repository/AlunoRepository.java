@@ -1,15 +1,16 @@
 package Repository;
 
 import Model.Aluno;
-import java.util.ArrayList;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AlunoRepository {
     private ArrayList<Aluno> alunos;
+    public String caminhoAluno = "src/data/alunos.csv";
 
     public AlunoRepository() {
         this.alunos = new ArrayList<>();
@@ -20,10 +21,12 @@ public class AlunoRepository {
             return false;
         }
         alunos.add(aluno);
+        salvarArquivo();
         return true;
     }
 
     public ArrayList<Aluno> listar() {
+        carregarArquivo();
         return alunos;
     }
 
@@ -52,6 +55,7 @@ public class AlunoRepository {
         Aluno aluno = buscarPorMatricula(matricula);
         if(aluno!=null) {
             alunos.remove(aluno);
+            salvarArquivo();
             return true;
         }
         return false;
@@ -63,14 +67,15 @@ public class AlunoRepository {
             aluno.setNome(alunoAtualizado.getNome());
             aluno.setCurso(alunoAtualizado.getCurso());
             aluno.setPeriodo(alunoAtualizado.getPeriodo());
+            salvarArquivo();
             return true;
         }
         return false;
     }
 
-    public void salvarArquivo(String caminho) {
+    public void salvarArquivo() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoAluno));
             for(int i=0;i<alunos.size();i++) {
                 bw.write(alunos.get(i).toString());
                 bw.newLine();
@@ -82,10 +87,10 @@ public class AlunoRepository {
         }
     }
 
-    public void carregarArquivo(String caminho) {
+    public void carregarArquivo() {
         alunos.clear();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(caminho));
+            BufferedReader br = new BufferedReader(new FileReader(caminhoAluno));
             String linha;
             while((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");

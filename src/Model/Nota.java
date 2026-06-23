@@ -8,6 +8,7 @@ public class Nota {
     private ArrayList<Double> notas;
 
     public Nota() {
+        this.notas = new ArrayList<>();
     }
 
     public Nota(String matriculaAluno, String codigoDisciplina) {
@@ -19,7 +20,7 @@ public class Nota {
     public Nota(String matriculaAluno, String codigoDisciplina, ArrayList<Double> notas) {
         this.matriculaAluno = matriculaAluno;
         this.codigoDisciplina = codigoDisciplina;
-        this.notas = notas;
+        this.notas = notas != null ? notas : new ArrayList<>();
     }
 
     public String getMatriculaAluno() {
@@ -43,7 +44,7 @@ public class Nota {
     }
 
     public void setNotas(ArrayList<Double> notas) {
-        this.notas = notas;
+        this.notas = notas != null ? notas : new ArrayList<>();
     }
 
     public void adicionarNota(double nota) {
@@ -67,7 +68,7 @@ public class Nota {
     public String getSituacao() {
         double media = calcularMedia();
 
-        if (media >= 5.0) {
+        if (media >= 6.0) {
             return "Aprovado";
         } else {
             return "Reprovado";
@@ -76,6 +77,12 @@ public class Nota {
 
     @Override
     public String toString() {
-        return matriculaAluno + ";" + codigoDisciplina + ";" + notas;
+        String resultado = matriculaAluno + ";" + codigoDisciplina;
+
+        for (double nota : notas) {
+            resultado += ";" + nota;
+        }
+
+        return resultado;
     }
 }

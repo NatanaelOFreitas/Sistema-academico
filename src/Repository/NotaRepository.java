@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class NotaRepository {
     private ArrayList<Nota> notas;
+    public String caminhoNota = "src/data/notas.csv";
 
     public NotaRepository() {
         this.notas = new ArrayList<>();
@@ -20,10 +21,12 @@ public class NotaRepository {
             return false;
         }
         notas.add(nota);
+        salvarArquivo();
         return true;
     }
 
     public ArrayList<Nota> listar() {
+        carregarArquivo();
         return notas;
     }
 
@@ -63,6 +66,7 @@ public class NotaRepository {
         Nota nota = buscar(matriculaAluno,codigoDisciplina);
         if(nota != null) {
             notas.remove(nota);
+            salvarArquivo();
             return true;
         }
         return false;
@@ -72,14 +76,15 @@ public class NotaRepository {
         Nota nota = buscar(notaAtualizada.getMatriculaAluno(),notaAtualizada.getCodigoDisciplina());
         if(nota != null) {
             nota.setNotas(notaAtualizada.getNotas());
+            salvarArquivo();
             return true;
         }
         return false;
     }
 
-    public void salvarArquivo(String caminho) {
+    public void salvarArquivo() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoNota));
             for(int i=0;i<notas.size();i++) {
                 bw.write(notas.get(i).toString());
                 bw.newLine();
@@ -91,17 +96,27 @@ public class NotaRepository {
         }
     }
 
-    public void carregarArquivo(String caminho) {
+    public void carregarArquivo() {
         notas.clear();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(caminho));
+            BufferedReader br = new BufferedReader(new FileReader(caminhoNota));
             String linha;
             while((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                ArrayList<Double> listaNotas = new ArrayList<>();
-                for(int i=2;i<dados.length;i++) {
-                    listaNotas.add(Double.parseDouble(dados[i]));
+                if(linha.trim().isEmpty()) {
+                    continue;
                 }
+
+                String[] dados = linha.split(";");
+                if(dados.length < 2) {
+                    continue;
+                }
+
+                ArrayList<Double> listaNotas = new ArrayList<>();
+
+                for(int i=2;i<dados.length;i++) {
+                    adicionarNotasDoCampo(listaNotas,dados[i]);
+                }
+
                 Nota nota = new Nota(dados[0],dados[1],listaNotas);
                 notas.add(nota);
             }
@@ -109,6 +124,29 @@ public class NotaRepository {
         }
         catch(IOException e) {
             System.out.println("Erro ao carregar arquivo");
+        }
+    }
+
+    private void adicionarNotasDoCampo(ArrayList<Double> listaNotas,String campo) {
+        String valor = campo.replace("[","").replace("]","").trim();
+
+        if(valor.isEmpty()) {
+            return;
+        }
+
+        String[] partes = valor.split(",");
+
+        for(int i=0;i<partes.length;i++) {
+            String nota = partes[i].trim();
+
+            if(!nota.isEmpty()) {
+                try {
+                    listaNotas.add(Double.parseDouble(nota));
+                }
+                catch(NumberFormatException e) {
+                    System.out.println("Nota invalida ignorada: " + nota);
+                }
+            }
         }
     }
 }

@@ -6,15 +6,17 @@ public class Turma {
     private String codigo;
     private Disciplina disciplina;
     private ArrayList<Aluno> turma;
+    private int quantidadeAlunos;
 
     public Turma(String codigo, Disciplina disciplina) {
         this.codigo = codigo;
         this.disciplina = disciplina;
         this.turma = new ArrayList<>();
+        this.quantidadeAlunos = 0;
     }
 
 
-    //getters
+    //setters
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
@@ -94,8 +96,32 @@ public class Turma {
         }
     }
 
+    public int getQuantidadeAlunos() {
+        return quantidadeAlunos;
+    }
+
+    public void setQuantidadeAlunos(int     quantidadeAlunos) {
+        this.quantidadeAlunos = quantidadeAlunos;
+    }
+
+
     @Override
     public String toString() {
-        return codigo + ";" + disciplina.getNome() + ";" + turma.size() + " aluno(s)";
+        String alunos = "[";
+
+        for (int i = 0; i < turma.size(); i++) {
+            alunos += "[" + turma.get(i).toString() + "]";
+
+            if (i < turma.size() - 1) {
+                alunos += ";";
+            }
+        }
+
+        alunos += "]";
+
+    return codigo + ";"
+            + disciplina + ";"
+            + quantidadeAlunos + ";"
+            + alunos;
     }
 }

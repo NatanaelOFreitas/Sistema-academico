@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class DisciplinaRepository {
     private ArrayList<Disciplina> disciplinas;
+    public String caminhoDisciplina = "src/data/disciplinas.csv";
 
     public DisciplinaRepository() {
         this.disciplinas = new ArrayList<>();
@@ -20,10 +21,12 @@ public class DisciplinaRepository {
             return false;
         }
         disciplinas.add(disciplina);
+        salvarArquivo();
         return true;
     }
 
     public ArrayList<Disciplina> listar() {
+        carregarArquivo();
         return disciplinas;
     }
 
@@ -52,6 +55,7 @@ public class DisciplinaRepository {
         Disciplina disciplina = buscarPorCodigo(codigo);
         if(disciplina!=null) {
             disciplinas.remove(disciplina);
+            salvarArquivo();
             return true;
         }
         return false;
@@ -62,14 +66,15 @@ public class DisciplinaRepository {
         if(disciplina!=null) {
             disciplina.setNome(disciplinaAtualizada.getNome());
             disciplina.setCargaHoraria(disciplinaAtualizada.getCargaHoraria());
+            salvarArquivo();
             return true;
         }
         return false;
     }
 
-    public void salvarArquivo(String caminho) {
+    public void salvarArquivo() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoDisciplina));
             for(int i=0;i<disciplinas.size();i++) {
                 bw.write(disciplinas.get(i).toString());
                 bw.newLine();
@@ -81,10 +86,10 @@ public class DisciplinaRepository {
         }
     }
 
-    public void carregarArquivo(String caminho) {
+    public void carregarArquivo() {
         disciplinas.clear();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(caminho));
+            BufferedReader br = new BufferedReader(new FileReader(caminhoDisciplina));
             String linha;
             while((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");

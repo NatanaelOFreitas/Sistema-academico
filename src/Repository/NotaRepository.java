@@ -102,11 +102,21 @@ public class NotaRepository {
             BufferedReader br = new BufferedReader(new FileReader(caminhoNota));
             String linha;
             while((linha = br.readLine()) != null) {
-                String[] dados = linha.split(";");
-                ArrayList<Double> listaNotas = new ArrayList<>();
-                for(int i=2;i<dados.length;i++) {
-                    listaNotas.add(Double.parseDouble(dados[i]));
+                if(linha.trim().isEmpty()) {
+                    continue;
                 }
+
+                String[] dados = linha.split(";");
+                if(dados.length < 2) {
+                    continue;
+                }
+
+                ArrayList<Double> listaNotas = new ArrayList<>();
+
+                for(int i=2;i<dados.length;i++) {
+                    adicionarNotasDoCampo(listaNotas,dados[i]);
+                }
+
                 Nota nota = new Nota(dados[0],dados[1],listaNotas);
                 notas.add(nota);
             }
@@ -114,6 +124,29 @@ public class NotaRepository {
         }
         catch(IOException e) {
             System.out.println("Erro ao carregar arquivo");
+        }
+    }
+
+    private void adicionarNotasDoCampo(ArrayList<Double> listaNotas,String campo) {
+        String valor = campo.replace("[","").replace("]","").trim();
+
+        if(valor.isEmpty()) {
+            return;
+        }
+
+        String[] partes = valor.split(",");
+
+        for(int i=0;i<partes.length;i++) {
+            String nota = partes[i].trim();
+
+            if(!nota.isEmpty()) {
+                try {
+                    listaNotas.add(Double.parseDouble(nota));
+                }
+                catch(NumberFormatException e) {
+                    System.out.println("Nota invalida ignorada: " + nota);
+                }
+            }
         }
     }
 }

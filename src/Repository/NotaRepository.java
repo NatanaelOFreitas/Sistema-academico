@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class NotaRepository {
     private ArrayList<Nota> notas;
+    public String caminhoNota = "src/data/notas.csv";
 
     public NotaRepository() {
         this.notas = new ArrayList<>();
@@ -20,6 +21,7 @@ public class NotaRepository {
             return false;
         }
         notas.add(nota);
+        salvarArquivo(caminhoNota);
         return true;
     }
 
@@ -63,6 +65,7 @@ public class NotaRepository {
         Nota nota = buscar(matriculaAluno,codigoDisciplina);
         if(nota != null) {
             notas.remove(nota);
+            salvarArquivo(caminhoNota);
             return true;
         }
         return false;
@@ -72,6 +75,7 @@ public class NotaRepository {
         Nota nota = buscar(notaAtualizada.getMatriculaAluno(),notaAtualizada.getCodigoDisciplina());
         if(nota != null) {
             nota.setNotas(notaAtualizada.getNotas());
+            salvarArquivo(caminhoNota);
             return true;
         }
         return false;

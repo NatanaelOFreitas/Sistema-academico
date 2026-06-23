@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class DisciplinaRepository {
     private ArrayList<Disciplina> disciplinas;
+    public String caminhoDisciplina = "src/data/disciplinas.csv";
 
     public DisciplinaRepository() {
         this.disciplinas = new ArrayList<>();
@@ -20,6 +21,7 @@ public class DisciplinaRepository {
             return false;
         }
         disciplinas.add(disciplina);
+        salvarArquivo(caminhoDisciplina);
         return true;
     }
 
@@ -52,6 +54,7 @@ public class DisciplinaRepository {
         Disciplina disciplina = buscarPorCodigo(codigo);
         if(disciplina!=null) {
             disciplinas.remove(disciplina);
+            salvarArquivo(caminhoDisciplina);
             return true;
         }
         return false;
@@ -62,6 +65,7 @@ public class DisciplinaRepository {
         if(disciplina!=null) {
             disciplina.setNome(disciplinaAtualizada.getNome());
             disciplina.setCargaHoraria(disciplinaAtualizada.getCargaHoraria());
+            salvarArquivo(caminhoDisciplina);
             return true;
         }
         return false;

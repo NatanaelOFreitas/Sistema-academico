@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class AlunoRepository {
     private ArrayList<Aluno> alunos;
+    public String caminhoAluno = "src/data/alunos.csv";
 
     public AlunoRepository() {
         this.alunos = new ArrayList<>();
@@ -20,6 +21,7 @@ public class AlunoRepository {
             return false;
         }
         alunos.add(aluno);
+        salvarArquivo(caminhoAluno);
         return true;
     }
 
@@ -52,6 +54,7 @@ public class AlunoRepository {
         Aluno aluno = buscarPorMatricula(matricula);
         if(aluno!=null) {
             alunos.remove(aluno);
+            salvarArquivo(caminhoAluno);
             return true;
         }
         return false;
@@ -63,6 +66,7 @@ public class AlunoRepository {
             aluno.setNome(alunoAtualizado.getNome());
             aluno.setCurso(alunoAtualizado.getCurso());
             aluno.setPeriodo(alunoAtualizado.getPeriodo());
+            salvarArquivo(caminhoAluno);
             return true;
         }
         return false;

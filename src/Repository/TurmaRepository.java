@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class TurmaRepository {
     private ArrayList<Turma> turmas;
+    public String caminhoTurma = "src/data/turmas.csv";
 
     public TurmaRepository() {
         this.turmas = new ArrayList<>();
@@ -21,6 +22,7 @@ public class TurmaRepository {
             return false;
         }
         turmas.add(turma);
+        salvarArquivo(caminhoTurma);
         return true;
     }
 
@@ -42,6 +44,7 @@ public class TurmaRepository {
         Turma turma = buscarPorCodigo(codigo);
         if(turma!=null) {
             turmas.remove(turma);
+            salvarArquivo(caminhoTurma);
             return true;
         }
         return false;
@@ -53,6 +56,7 @@ public class TurmaRepository {
         if(turma != null) {
             turma.setDisciplina(turmaAtualizada.getDisciplina());
             turma.setTurma(turmaAtualizada.getTurma());
+            salvarArquivo(caminhoTurma);
             return true;
         }
 

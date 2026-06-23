@@ -248,5 +248,11 @@ public class TelaAluno extends JFrame {
         txtPeriodo.setText("");
 
     }
+    public static void main(String[] args) {
+
+        SwingUtilities.invokeLater(() ->
+                new TelaRelatorio().setVisible(true));
+
+    }
 
 }

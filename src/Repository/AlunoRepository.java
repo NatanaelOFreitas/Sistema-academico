@@ -21,12 +21,12 @@ public class AlunoRepository {
             return false;
         }
         alunos.add(aluno);
-        salvarArquivo(caminhoAluno);
+        salvarArquivo();
         return true;
     }
 
     public ArrayList<Aluno> listar() {
-        carregarArquivo(caminhoAluno);
+        carregarArquivo();
         return alunos;
     }
 
@@ -55,7 +55,7 @@ public class AlunoRepository {
         Aluno aluno = buscarPorMatricula(matricula);
         if(aluno!=null) {
             alunos.remove(aluno);
-            salvarArquivo(caminhoAluno);
+            salvarArquivo();
             return true;
         }
         return false;
@@ -67,15 +67,15 @@ public class AlunoRepository {
             aluno.setNome(alunoAtualizado.getNome());
             aluno.setCurso(alunoAtualizado.getCurso());
             aluno.setPeriodo(alunoAtualizado.getPeriodo());
-            salvarArquivo(caminhoAluno);
+            salvarArquivo();
             return true;
         }
         return false;
     }
 
-    public void salvarArquivo(String caminho) {
+    public void salvarArquivo() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoAluno));
             for(int i=0;i<alunos.size();i++) {
                 bw.write(alunos.get(i).toString());
                 bw.newLine();
@@ -87,10 +87,10 @@ public class AlunoRepository {
         }
     }
 
-    public void carregarArquivo(String caminho) {
+    public void carregarArquivo() {
         alunos.clear();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(caminho));
+            BufferedReader br = new BufferedReader(new FileReader(caminhoAluno));
             String linha;
             while((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");

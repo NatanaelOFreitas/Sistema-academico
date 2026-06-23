@@ -32,6 +32,7 @@ public class TelaAluno extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         alunoController = new AlunoController(new AlunoRepository());
+        alunoController.carregarArquivo();
 
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBackground(new Color(230,240,255));

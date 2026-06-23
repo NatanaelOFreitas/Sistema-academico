@@ -96,4 +96,8 @@ import java.util.ArrayList;
 
             return repository.atualizar(aluno);
         }
-}
+
+        public void carregarArquivo(){
+            repository.carregarArquivo();
+        }
+    }

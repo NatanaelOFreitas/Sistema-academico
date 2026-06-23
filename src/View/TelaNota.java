@@ -37,6 +37,7 @@ public class TelaNota extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         notaController = new NotaController(new NotaRepository());
+        notaController.carregarArquivo();
 
         JPanel painel = new JPanel(new BorderLayout(10,10));
         painel.setBackground(new Color(230,240,255));

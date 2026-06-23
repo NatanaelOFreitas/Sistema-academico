@@ -143,4 +143,8 @@ public class NotaController {
 
         return nota.getSituacao();
     }
+
+    public void carregarArquivo(){
+        repository.carregarArquivo();
+    }
 }

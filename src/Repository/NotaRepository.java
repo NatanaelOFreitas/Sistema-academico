@@ -21,12 +21,12 @@ public class NotaRepository {
             return false;
         }
         notas.add(nota);
-        salvarArquivo(caminhoNota);
+        salvarArquivo();
         return true;
     }
 
     public ArrayList<Nota> listar() {
-        carregarArquivo(caminhoNota);
+        carregarArquivo();
         return notas;
     }
 
@@ -66,7 +66,7 @@ public class NotaRepository {
         Nota nota = buscar(matriculaAluno,codigoDisciplina);
         if(nota != null) {
             notas.remove(nota);
-            salvarArquivo(caminhoNota);
+            salvarArquivo();
             return true;
         }
         return false;
@@ -76,15 +76,15 @@ public class NotaRepository {
         Nota nota = buscar(notaAtualizada.getMatriculaAluno(),notaAtualizada.getCodigoDisciplina());
         if(nota != null) {
             nota.setNotas(notaAtualizada.getNotas());
-            salvarArquivo(caminhoNota);
+            salvarArquivo();
             return true;
         }
         return false;
     }
 
-    public void salvarArquivo(String caminho) {
+    public void salvarArquivo() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(caminho));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(caminhoNota));
             for(int i=0;i<notas.size();i++) {
                 bw.write(notas.get(i).toString());
                 bw.newLine();
@@ -96,10 +96,10 @@ public class NotaRepository {
         }
     }
 
-    public void carregarArquivo(String caminho) {
+    public void carregarArquivo() {
         notas.clear();
         try {
-            BufferedReader br = new BufferedReader(new FileReader(caminho));
+            BufferedReader br = new BufferedReader(new FileReader(caminhoNota));
             String linha;
             while((linha = br.readLine()) != null) {
                 String[] dados = linha.split(";");
